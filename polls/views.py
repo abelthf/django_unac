@@ -1,10 +1,15 @@
 from django.http import HttpResponse
 from .models import Question
+from django.template import loader
 
 def index(request):
 	lasted_question_list = Question.objects.order_by('-pub_date')[:5]
-	output = ', '.join([q.question_text for q in lasted_question_list])
-	return HttpResponse(output)
+	#output = ', '.join([q.question_text for q in lasted_question_list])
+	template = loader.get_template('polls/index.html')
+	context = {
+	    'lasted_question_list': lasted_question_list,
+	}
+	return HttpResponse(template.render(context, request))
 
 
 
