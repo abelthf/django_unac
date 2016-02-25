@@ -3,15 +3,12 @@ from .models import Question
 from django.template import loader
 
 def index(request):
-	lasted_question_list = Question.objects.order_by('-pub_date')[:5]
-	#output = ', '.join([q.question_text for q in lasted_question_list])
-	template = loader.get_template('polls/templates/index.html')
-	context = {
-	    'lasted_question_list': lasted_question_list,
-	}
-	return HttpResponse(template.render(context, request))
-
-
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    template = loader.get_template('polls/index.html')
+    context = {
+        'latest_question_list': latest_question_list,
+    }
+    return HttpResponse(template.render(context, request))
 
 def detail(request, question_id):
 	return HttpResponse("Usted se encuentra en la pregunta %s." % question_id)
